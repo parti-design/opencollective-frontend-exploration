@@ -19,3 +19,4 @@ Keep entries small. Multiple small entries are better than one large one. Patter
 ## Log
 
 - [001 — Budget section "Total Raised" misread as available balance](./001-budget-total-raised-mislabeled.md)
+- [002 — Fiscal host owns the relationship but not the platform](./002-fiscal-host-brand-confusion.md)

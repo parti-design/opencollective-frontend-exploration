@@ -45,3 +45,4 @@ Back to: [Wiki Home](../Home.md)
 
 - [Current Focus](./Current-Focus.md)
 - [Architecture and Constraints](./Architecture-and-Constraints.md)
+- Plugin-model questions are carried forward into the spec: [F002 — Plugin architecture](../transformation/features/F002-plugin-architecture.md)

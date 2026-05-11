@@ -55,3 +55,4 @@ Extensions should mainly own:
 - [Current Focus](./Current-Focus.md)
 - [Ideas and Questions](./Ideas-and-Questions.md)
 - Branch-specific Swish exploration note: `docs/plugin-architecture.md` on `swish-implementation`
+- Forward-looking spec built on top of these findings: [F002 — Plugin architecture](../transformation/features/F002-plugin-architecture.md)

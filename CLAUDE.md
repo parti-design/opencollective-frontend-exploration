@@ -16,14 +16,18 @@ The shared wiki lives under [`docs/wiki/`](./docs/wiki/Home.md). Entry point is 
 
 Key sub-sections:
 
-- [`docs/wiki/docks/`](./docs/wiki/Home.md) — current focus, architecture notes, ideas, implementation log
-- [`docs/wiki/transformation/`](./docs/wiki/transformation/README.md) — long-horizon redesign tracking: pain points from real onboarding, and the structural patterns they point to, toward an eventual fork
+- [`docs/wiki/docks/`](./docs/wiki/Home.md) — current focus, architecture notes, ideas, implementation log. Short-lived working exploration of Open Collective as it exists today.
+- [`docs/wiki/transformation/`](./docs/wiki/transformation/README.md) — long-horizon redesign and spec for the new version, in three layers: `pain-points/` (observed) → `patterns/` (structural insight) → `features/` (designed solutions to build).
+
+The two sections cross-reference each other. When `docks/` has prior research relevant to a feature spec, the feature should cite it instead of duplicating it.
 
 ### When the user reports a pain point
 
-Add it as a new numbered file in `docs/wiki/transformation/pain-points/` (format: `NNN-short-slug.md`), update the `pain-points/README.md` index, and link it to the relevant entry in `patterns/`. If no pattern fits, the pain point may be the start of a new one — note it and revisit when a second related pain point arrives.
+1. Add it as a new numbered file in `docs/wiki/transformation/pain-points/` (`NNN-short-slug.md`) and update `pain-points/README.md`.
+2. Decide whether it fits an existing pattern. If yes, link to it. If it points at a new structural insight, write the pattern under `patterns/` and link both ways. Patterns usually earn a page once two or more pain points point at the same root cause, or when one observation makes the structural picture obvious.
+3. If the pattern stabilizes into something the user would actually build, lift the prescriptive shape into a feature spec under `features/` (`FNNN-short-slug.md`) and update `features/README.md`. Features should cite `docks/` research where it exists, not duplicate it.
 
-Keep pain-point entries small: date, role affected, where in the product, what happened, the underlying issue, links. Resist the urge to write a full proposal.
+Keep pain-point entries small: date, role affected, where in the product, what happened, the underlying issue, links. Resist the urge to write a full proposal at the pain-point layer — proposals live in features.
 
 ## Git and PR workflow
 

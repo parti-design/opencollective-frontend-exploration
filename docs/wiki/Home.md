@@ -24,7 +24,9 @@ Short dated notes about changes made in the repo, branches used, and where deepe
 
 ### [Transformation](./transformation/README.md)
 
-Longer-term redesign and re-architecture work. Tracks pain points observed in the wild and the structural patterns they point to — the material that will eventually shape a fork of Open Collective.
+Longer-term redesign and re-architecture work. The spec doc for the new version of Open Collective, organized as pain points → patterns → features. Pain points are what we observed, patterns are how we think about it, features are what we want to build.
+
+The `docks/` and `transformation/` sections relate: `docks/` is short-lived working exploration of OC as-is; `transformation/` is the forward-looking spec. They cross-reference each other so prior research isn't duplicated.
 
 ## Current Snapshot
 
