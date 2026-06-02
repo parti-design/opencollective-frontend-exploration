@@ -4,7 +4,7 @@ import { accountHasGST, accountHasVAT, TaxType } from '@opencollective/taxes';
 import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 import dayjs from 'dayjs';
 import { Form, Formik, useFormikContext } from 'formik';
-import { cloneDeep, debounce, groupBy, map, omit, pick } from 'lodash';
+import { cloneDeep, debounce, groupBy, map, omit, pick } from 'lodash-es';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { styled } from 'styled-components';
 
@@ -110,6 +110,7 @@ const createPendingContributionModalQuery = gql`
       }
       policies {
         id
+        publicId
         REQUIRE_2FA_FOR_ADMINS
       }
       isTrustedHost
@@ -130,6 +131,7 @@ const createPendingContributionModalCollectiveQuery = gql`
   query CreatePendingContributionCollective($slug: String!) {
     account(slug: $slug) {
       id
+      legacyId
       type
       currency
       childrenAccounts {
@@ -494,6 +496,7 @@ const CreatePendingContributionForm = ({ host, onClose, error, edit }: CreatePen
               onChange={({ value }) => form.setFieldValue(field.name, value)}
               collective={field.value}
               includeVendorsForHostId={collective?.host?.legacyId}
+              vendorVisibleToAccountIds={collective?.legacyId ? [collective.legacyId] : []}
               menuPortalTarget={null}
               creatable={['USER', 'VENDOR']}
               HostCollectiveId={host?.legacyId}

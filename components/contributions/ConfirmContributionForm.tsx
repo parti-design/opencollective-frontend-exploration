@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { accountHasGST, accountHasVAT, TaxType } from '@opencollective/taxes';
 import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
-import { omit, pick } from 'lodash';
+import { omit, pick } from 'lodash-es';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { getCurrentLocalDateStr } from '../../lib/date-utils';
@@ -309,7 +309,7 @@ export const ConfirmContributionForm = ({
                 <StyledInputPercentage
                   id="confirmContribution-taxRate"
                   name="tax.rate"
-                  data-cy="host-fee-percent"
+                  data-cy="confirm-contribution-tax-rate"
                   value={taxPercent}
                   onChange={value => setTaxPercent(value)}
                 />
@@ -328,7 +328,7 @@ export const ConfirmContributionForm = ({
                 <StyledInputPercentage
                   id="confirmContribution-hostFee"
                   name="hostFeePercent"
-                  data-cy="host-fee-percent"
+                  data-cy="confirm-contribution-host-fee-percent"
                   value={hostFeePercent}
                   onChange={value => setHostFeePercent(value)}
                 />

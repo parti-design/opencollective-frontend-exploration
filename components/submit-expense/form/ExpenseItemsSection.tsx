@@ -4,7 +4,7 @@ import { GST_RATE_PERCENT, TaxType } from '@opencollective/taxes';
 import type { CheckedState } from '@radix-ui/react-checkbox';
 import { getEmojiByCurrencyCode } from 'country-currency-emoji-flags';
 import { useFormikContext } from 'formik';
-import { get, isNil, pick, round, truncate } from 'lodash';
+import { get, isNil, pick, round, truncate } from 'lodash-es';
 import { ArrowDown, ArrowUp, Coins, Plus, Trash2 } from 'lucide-react';
 import FlipMove from 'react-flip-move';
 import type { IntlShape } from 'react-intl';
@@ -17,6 +17,7 @@ import {
   AccountType,
   CurrencyExchangeRateSourceType,
   ExpenseLockableFields,
+  ExpenseStatus,
 } from '../../../lib/graphql/types/v2/graphql';
 import { getIntlDisplayNames } from '../../../lib/i18n';
 import { i18nTaxType } from '../../../lib/i18n/taxes';
@@ -293,6 +294,7 @@ type ExpenseItemProps = {
 function getExpenseItemProps(form: ExpenseForm) {
   return {
     payeeType: form.options.payee?.type,
+    isDraft: form.options.expense?.status === ExpenseStatus.DRAFT,
     ...pick(form, ['setFieldValue', 'isSubmitting', 'setFieldTouched']),
     ...pick(form.options, [
       'allowExpenseItemAttachment',
@@ -424,7 +426,7 @@ const ExpenseItem = memoWithGetFormProps(function ExpenseItem(props: ExpenseItem
         <div className="@container grow">
           <div className="mb-2">
             <FormField
-              required={props.isAdminOfPayee || props.payeeType === AccountType.VENDOR}
+              required={props.isDraft || props.isAdminOfPayee || props.payeeType === AccountType.VENDOR}
               disabled={props.isDescriptionLocked || props.isSubmitting}
               label={intl.formatMessage({ defaultMessage: 'Item Description', id: 'xNL/oy' })}
               placeholder={intl.formatMessage({ defaultMessage: 'Enter what best describes the item', id: '/eapvj' })}
@@ -441,7 +443,7 @@ const ExpenseItem = memoWithGetFormProps(function ExpenseItem(props: ExpenseItem
           <div className="flex flex-col gap-4 @md:grid @md:grid-cols-3">
             {props.hasExpenseItemDate && (
               <FormField
-                required={props.isAdminOfPayee || props.payeeType === AccountType.VENDOR}
+                required={props.isDraft || props.isAdminOfPayee || props.payeeType === AccountType.VENDOR}
                 disabled={props.isDateLocked || props.isSubmitting}
                 label={intl.formatMessage({ defaultMessage: 'Date', id: 'expense.incurredAt' })}
                 name={`expenseItems.${props.index}.incurredAt`}

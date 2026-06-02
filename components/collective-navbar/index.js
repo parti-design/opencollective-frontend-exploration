@@ -9,7 +9,7 @@ import { AttachMoney } from '@styled-icons/material/AttachMoney';
 import { Close } from '@styled-icons/material/Close';
 import { Stack } from '@styled-icons/remix-line/Stack';
 import { themeGet } from '@styled-system/theme-get';
-import { get, pickBy, without } from 'lodash';
+import { get, pickBy, without } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled, { createGlobalStyle, css, ThemeProvider } from 'styled-components';
@@ -310,7 +310,9 @@ const getDefaultCallsToActions = (collective, sections, isAdmin, LoggedInUser, i
     hasContact: !isAdmin && (isHostAdmin || isFeatureAvailable(collective, 'CONTACT_FORM')),
     hasApply: isFeatureAvailable(collective, 'RECEIVE_HOST_APPLICATIONS'),
     hasSubmitExpense:
-      isFeatureAvailable(collective, 'RECEIVE_EXPENSES') && expenseSubmissionAllowed(collective, LoggedInUser),
+      Boolean(LoggedInUser) &&
+      isFeatureAvailable(collective, 'RECEIVE_EXPENSES') &&
+      expenseSubmissionAllowed(collective, LoggedInUser),
     hasManageSubscriptions:
       isAdmin && get(features, 'RECURRING_CONTRIBUTIONS') === 'ACTIVE' && isIndividualAccount(collective),
     hasDashboard: isAdmin && isFeatureAvailable(collective, 'HOST_DASHBOARD'),

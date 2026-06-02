@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { ExclamationCircle } from '@styled-icons/fa-solid/ExclamationCircle';
 import { useFormik } from 'formik';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import roles from '../../lib/constants/roles';
@@ -168,7 +168,7 @@ const throttledCall = debounce((searchFunc, variables) => {
 type EditVirtualCardModalProps = {
   host: Account;
   collective?: Account;
-  virtualCard?: VirtualCard;
+  virtualCard?: Omit<VirtualCard, 'publicId'>;
   virtualCardRequest?: VirtualCardRequest;
   onSuccess: (el: React.ReactNode) => void;
   onClose: () => void;

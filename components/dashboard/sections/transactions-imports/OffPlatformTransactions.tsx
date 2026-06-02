@@ -1,7 +1,9 @@
 import React from 'react';
 import { gql, useApolloClient, useQuery } from '@apollo/client';
-import { truncate } from 'lodash';
-import Lottie from 'lottie-react';
+import { truncate } from 'lodash-es';
+import dynamic from 'next/dynamic';
+
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 import { Info, MessageSquare, RotateCcw } from 'lucide-react';
 import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
 import { z } from 'zod';
@@ -82,6 +84,7 @@ const offPlatformTransactionsQuery = gql`
       type
       policies {
         id
+        publicId
         REQUIRE_2FA_FOR_ADMINS
       }
       accountingCategories @skip(if: $fetchOnlyRowIds) {
@@ -95,6 +98,7 @@ const offPlatformTransactionsQuery = gql`
         totalCount
         nodes {
           id
+          publicId
           source
           name
         }
@@ -120,6 +124,7 @@ const offPlatformTransactionsQuery = gql`
           ...TransactionsImportRowFields @skip(if: $fetchOnlyRowIds)
           transactionsImport @skip(if: $fetchOnlyRowIds) {
             id
+            publicId
             source
             name
           }
@@ -255,7 +260,7 @@ const transactionsImportFilter: FilterConfig<z.infer<typeof transactionsImportFi
         <ComboSelectFilter
           options={transactionsImports
             .map(transactionsImport => ({
-              value: transactionsImport.id,
+              value: transactionsImport.publicId,
               label: `${transactionsImport.source} - ${transactionsImport.name}`,
             }))
             .sort(sortSelectOptions)}
@@ -264,7 +269,9 @@ const transactionsImportFilter: FilterConfig<z.infer<typeof transactionsImportFi
       );
     },
     valueRenderer: ({ value, meta }) => {
-      const transactionsImport = meta.transactionsImports?.find(transactionsImport => transactionsImport.id === value);
+      const transactionsImport = meta.transactionsImports?.find(
+        transactionsImport => transactionsImport.id === value || transactionsImport.publicId === value,
+      );
       if (!transactionsImport) {
         return '';
       } else {

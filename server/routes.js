@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const express = require('express');
 const proxy = require('express-http-proxy');
-const { trim } = require('lodash');
+const trim = require('lodash-es/trim').default;
 
 const downloadFileHandler = require('./download-file');
 const baseApiUrl = process.env.INTERNAL_API_URL || process.env.API_URL;
@@ -43,7 +43,7 @@ module.exports = expressApp => {
       '/api',
       proxy(baseApiUrl, {
         proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
-          for (const key of ['oc-env', 'oc-secret', 'oc-application', 'Content-Type']) {
+          for (const key of ['oc-env', 'oc-secret', 'oc-application', 'Content-Type', 'Cookie', 'Authorization']) {
             if (srcReq.headers[key]) {
               proxyReqOpts.headers[key] = srcReq.headers[key];
             }

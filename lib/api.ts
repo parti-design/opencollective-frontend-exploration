@@ -222,6 +222,21 @@ export function disconnectAccount(collectiveId, service) {
   }).then(checkResponseStatus);
 }
 
+/**
+ * Returns the PayPal Connect public client ID from the platform backend.
+ * Returns null if PayPal Connect is not configured
+ */
+export function getPaypalConnectConfig(accountId: string): Promise<{
+  clientId: string;
+  redirectUri: string;
+  authorizeUrl: string;
+} | null> {
+  const url = new URL(`${window.location.origin}/api/connected-accounts/paypal/connect-config`);
+  url.searchParams.set('accountId', accountId);
+  url.searchParams.set('redirect', window.location.href.replace(/\?.*/, ''));
+  return fetch(url.toString()).then(response => (response.ok ? response.json() : null));
+}
+
 export function checkUserExistence(email) {
   if (!isValidEmail(email)) {
     return Promise.resolve(false);
@@ -459,9 +474,9 @@ export async function fetchCSVFileFromRESTService(url, filename, { isAuthenticat
 }
 
 export function getGithubRepos(accessToken) {
-  // NOTE: it's tempting to move the access token to the Authorization HTTP header
-  // But we need to make sure it works well with Cypress ci.intercept
-  return fetch(`/api/github-repositories?access_token=${accessToken}`).then(checkResponseStatus);
+  return fetch('/api/github-repositories', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  }).then(checkResponseStatus);
 }
 
 export function sendContactMessage(body) {

@@ -7,6 +7,7 @@ export type { VendorFieldsFragment } from '../../lib/graphql/types/v2/graphql';
 export const vendorFieldFragment = gql`
   fragment VendorFields on Vendor {
     id
+    publicId
     slug
     name
     legalName
@@ -68,8 +69,20 @@ export const vendorFieldFragment = gql`
       name
       imageUrl
     }
+
+    useVendorPolicy
   }
   ${accountHoverCardFields}
+`;
+
+export const createVendorMutation = gql`
+  mutation CreateVendor($vendor: VendorCreateInput!, $host: AccountReferenceInput!) {
+    createVendor(host: $host, vendor: $vendor) {
+      id
+      ...VendorFields
+    }
+  }
+  ${vendorFieldFragment}
 `;
 
 export const setVendorArchiveMutation = gql`

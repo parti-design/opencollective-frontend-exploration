@@ -1,5 +1,5 @@
 import React from 'react';
-import { orderBy } from 'lodash';
+import { orderBy } from 'lodash-es';
 import { FormattedMessage } from 'react-intl';
 
 import { PayoutMethodType } from '@/lib/constants/payout-method';
@@ -51,6 +51,7 @@ export default function PayoutMethodsTable({ account, loading, onUpdate, ...prop
           isChecked
           isEditable
           disableWarningMessages
+          isPaypalConnectEnabled
         />
       ))}
       {archived?.length > 0 && (
